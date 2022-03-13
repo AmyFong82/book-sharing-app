@@ -15,6 +15,8 @@ class Api::V1::BooksController < ApplicationController
 	end
 
 	def create
+		@user = User.find(params[:id])
+		@token = encode_token({ user_id: @user.id })
 		book = Book.create(book_params)
 		render json: book, except: [:created_at, :updated_at], status: :created
 	end

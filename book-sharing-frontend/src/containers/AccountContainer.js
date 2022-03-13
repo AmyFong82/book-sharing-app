@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import Account from '../components/users/Account'
+import { showAccount } from '../../actions/userActions'
+
 
 class AccountContainer extends Component {
+	
 
 	render() {
 		return(
@@ -13,12 +16,19 @@ class AccountContainer extends Component {
 	}
 }
 
+// const mapStateToProps = state => {
+// 	return {
+// 		user: state.user.details,
+// 		books: state.user.books,
+// 		requests: state.user.requests
+// 	}
+// }
+
 const mapStateToProps = state => {
 	return {
-		user: state.user.details,
-		books: state.user.books,
-		requests: state.user.requests
+		user: state.user.details
 	}
 }
 
-export default connect(mapStateToProps)(AccountContainer)
+// export default connect(mapStateToProps)(AccountContainer)
+export default connect(mapStateToProps, {showAccount})(AccountContainer)

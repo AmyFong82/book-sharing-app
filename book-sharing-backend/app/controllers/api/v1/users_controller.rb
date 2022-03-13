@@ -2,8 +2,6 @@ class Api::V1::UsersController < ApplicationController
   skip_before_action :authorized, only: [:create]
 
 	def show
-		@user = User.find(params[:id])
-		@token = encode_token({ user_id: @user.id })
 		render json: { details: @user, books: @user.books, requests: @user.requestedBooks, jwt: @token }, except: [:created_at, :updated_at, :password_digest], status: :accepted
 	end
 

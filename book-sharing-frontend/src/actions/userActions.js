@@ -4,7 +4,28 @@ export const login = user => {
 		fetch('http://localhost:3001/api/v1/login',{
 			method: 'POST',
 			headers: {
-			"Content-Type": "application/json",
+				"Content-Type": "application/json",
+    		"Accept": "application/json"
+			},
+			body: JSON.stringify(user)
+		}).then(resp => resp.json())
+			.then(respJson => {
+				if (respJson.details){
+					dispatch({type: 'LOGIN_USER', respJson})
+				}else{
+					dispatch({type: 'LOGIN_FAILED', loginStatus: respJson.message})
+				}
+			})
+	}
+}
+
+export const showAccount = user => {
+	return (dispatch) => {
+		dispatch({type: 'AUTHENTICATING'})
+		fetch(`http://localhost:3001/api/v1/users/${user.id}`,{
+			headers: {
+				Authorization: `Bearer ${user.jwt}`,
+				"Content-Type": "application/json",
     		"Accept": "application/json"
 			},
 			body: JSON.stringify(user)
@@ -25,7 +46,7 @@ export const signup = user => {
 		fetch('http://localhost:3001/api/v1/signup',{
 			method: 'POST',
 			headers: {
-			"Content-Type": "application/json",
+				"Content-Type": "application/json",
     		"Accept": "application/json"
 			},
 			body: JSON.stringify(user)
